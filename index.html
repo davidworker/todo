@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TODO APP</title>
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>TODO APP</h1>
+            <div class="input-group">
+                <input type="text" id="todoInput" placeholder="新增待辦事項..." />
+                <button id="addTodo">新增</button>
+            </div>
+            <div class="todos-container">
+                <div class="todo-section">
+                    <h2>進行中</h2>
+                    <ul id="activeTodoList" class="todo-list"></ul>
+                </div>
+                <div class="todo-section">
+                    <h2>已完成</h2>
+                    <ul id="completedTodoList" class="todo-list"></ul>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="js/main.js"></script>
+</html>
