@@ -1,12 +1,20 @@
 class Cloud {
-    constructor(uid = '1') {
+    constructor(uid = null) {
         this.uid = uid
         this.apiBaseUrl = 'https://book.niceinfos.com/frontend/api/'
+    }
+
+    // 檢查是否有設置 uid
+    checkUid() {
+        if (!this.uid) {
+            throw new Error('需要設置使用者 ID')
+        }
     }
 
     // 從雲端獲取待辦事項
     async fetchTodos() {
         try {
+            this.checkUid()
             const response = await fetch(`${this.apiBaseUrl}?action=todo&uid=${this.uid}`)
             const result = await response.json()
 
@@ -25,6 +33,7 @@ class Cloud {
     // 將資料儲存到雲端
     async saveTodos(todos) {
         try {
+            this.checkUid()
             const response = await fetch(this.apiBaseUrl, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -49,6 +58,9 @@ class Cloud {
 
     // 設置使用者 ID
     setUserId(uid) {
+        if (!uid) {
+            throw new Error('使用者 ID 不能為空')
+        }
         this.uid = uid
     }
 }
