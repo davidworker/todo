@@ -1,7 +1,7 @@
 class Cloud {
     constructor(uid = null) {
         this.uid = uid
-        this.apiBaseUrl = 'https://book.niceinfos.com/frontend/api/'
+        this.apiBaseUrl = 'https://book.niceinfos.com/api/todo/'
     }
 
     // 檢查是否有設置 uid
@@ -15,7 +15,7 @@ class Cloud {
     async fetchTodos() {
         try {
             this.checkUid()
-            const response = await fetch(`${this.apiBaseUrl}?action=todo&uid=${this.uid}`)
+            const response = await fetch(`${this.apiBaseUrl}?uid=${this.uid}`)
             const result = await response.json()
 
             if (result.code === 200) {
@@ -37,9 +37,8 @@ class Cloud {
             const response = await fetch(this.apiBaseUrl, {
                 method: 'POST',
                 body: JSON.stringify({
-                    action: 'todo',
-                    data: todos,
                     uid: this.uid,
+                    data: todos,
                 }),
             })
 
