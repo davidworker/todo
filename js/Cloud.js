@@ -99,9 +99,11 @@ class Cloud {
             localStorage.removeItem('todo_api_url')
             return
         }
-        this.apiBaseUrl = url
+
+        // 確保 URL 結尾有斜線
+        this.apiBaseUrl = url.endsWith('/') ? url : `${url}/`
         // 儲存 API URL 到 LocalStorage
-        localStorage.setItem('todo_api_url', url)
+        localStorage.setItem('todo_api_url', this.apiBaseUrl)
     }
 }
 

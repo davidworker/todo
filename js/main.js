@@ -117,8 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
             denyButtonText: '清除設定',
             cancelButtonText: '取消',
             inputValidator: (value) => {
-                if (value && !value.startsWith('http')) {
-                    return '請輸入有效的 URL'
+                if (value) {
+                    try {
+                        const url = new URL(value)
+                        if (!url.protocol.startsWith('http')) {
+                            return '請使用 HTTP 或 HTTPS 協議'
+                        }
+                    } catch (e) {
+                        return '請輸入有效的 URL'
+                    }
                 }
             },
         })
