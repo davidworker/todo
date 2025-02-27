@@ -42,6 +42,7 @@ class Storage {
             if (result.isConfirmed && result.value) {
                 if (isChanging) {
                     // 清空本地資料
+                    this.todos = []
                     localStorage.removeItem(this.key)
                 }
                 localStorage.setItem('todo_uid', result.value)
@@ -72,7 +73,8 @@ class Storage {
             const cloudTodos = await this.cloud.fetchTodos()
             if (cloudTodos.length > 0) {
                 // 如果雲端有資料，更新本地存儲
-                this.saveTodos(cloudTodos.map((item) => Todo.fromJSON(item)))
+                this.todos = cloudTodos.map((item) => Todo.fromJSON(item))
+                await this.saveTodos(this.todos)
             } else {
                 // 如果雲端沒有資料，上傳本地資料
                 const localTodos = this.getTodos()
