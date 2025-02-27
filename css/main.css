@@ -1,6 +1,6 @@
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -15,15 +15,17 @@
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
-    background-color: #4caf50;
+    background-color: #e67e22;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-left: 15px;
+    white-space: nowrap;
 }
 
 .change-uid-btn:hover,
 .config-api-btn:hover {
-    background-color: #45a049;
+    background-color: #d35400;
 }
 
 .api-status {
@@ -42,11 +44,11 @@
 }
 
 .status-value {
-    color: #dc3545;
+    color: #e74c3c;
 }
 
 .status-value.connected {
-    color: #28a745;
+    color: #2ecc71;
 }
 
 * {
@@ -89,16 +91,21 @@ h2 {
 .input-group {
     display: flex;
     gap: 10px;
-    margin-bottom: 2rem;
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(52, 73, 94, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(52, 152, 219, 0.2);
 }
 
 #todoInput {
     flex: 1;
-    padding: 12px;
+    padding: 15px;
     border: 2px solid #34495e;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
     background: #34495e;
     color: #ecf0f1;
 }
@@ -111,21 +118,26 @@ h2 {
     outline: none;
     border-color: #3498db;
     background: #2c3e50;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 #addTodo {
-    padding: 12px 24px;
+    padding: 15px 30px;
     background: #3498db;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     color: white;
     font-weight: bold;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #addTodo:hover {
     background: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .todos-container {
@@ -180,4 +192,72 @@ h2 {
 
 .delete-btn:hover {
     background: #c0392b;
+}
+
+.user-info {
+    margin: 10px 0 20px 0;
+    padding: 15px;
+    background-color: #2c3e50;
+    border-radius: 12px;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    color: #ecf0f1;
+}
+
+.user-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-details {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.api-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.api-details {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.info-label {
+    font-weight: bold;
+    margin-right: 5px;
+    color: #95a5a6;
+}
+
+.info-value {
+    color: #ecf0f1;
+    word-break: break-all;
+}
+
+.config-api-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 15px;
+    white-space: nowrap;
+}
+
+.config-api-btn:hover {
+    background-color: #2980b9;
 }

@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // API 設定相關元素
     const configApiBtn = document.getElementById('configApi')
     const apiStatusText = document.getElementById('apiStatusText')
+    const currentUser = document.getElementById('currentUser')
+    const apiUrl = document.getElementById('apiUrl')
 
     // 創建待辦事項元素
     const createTodoElement = (todo) => {
@@ -103,6 +105,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 更新 API 狀態顯示
     function updateApiStatus() {
+        // 更新使用者資訊
+        const savedUid = localStorage.getItem('todo_uid')
+        currentUser.textContent = savedUid || '未設定'
+
+        // 更新 API 資訊
+        const savedApiUrl = localStorage.getItem('todo_api_url')
+        apiUrl.textContent = savedApiUrl || '未設定'
+
         if (cloud.checkApi()) {
             apiStatusText.textContent = '已連接'
             apiStatusText.classList.add('connected')

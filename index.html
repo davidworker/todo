@@ -11,14 +11,25 @@
         <div class="container">
             <div class="header">
                 <h1>TODO APP</h1>
-                <div class="header-buttons">
+            </div>
+            <div class="user-info">
+                <div class="info-item user-info-row">
+                    <div class="user-details">
+                        <span class="info-label">目前使用者：</span>
+                        <span id="currentUser" class="info-value">未設定</span>
+                    </div>
                     <button id="changeUid" class="change-uid-btn">更換使用者</button>
+                </div>
+                <div class="info-item api-info">
+                    <div class="api-details">
+                        <span class="info-label">API 位置：</span>
+                        <span id="apiUrl" class="info-value">未設定</span>
+                        <span class="info-label status-text">（狀態：</span>
+                        <span id="apiStatusText" class="status-value">未設定</span>
+                        <span>）</span>
+                    </div>
                     <button id="configApi" class="config-api-btn">設定 API</button>
                 </div>
-            </div>
-            <div id="apiStatus" class="api-status">
-                <span class="status-text">API 狀態：</span>
-                <span id="apiStatusText" class="status-value">未設定</span>
             </div>
             <div class="input-group">
                 <input type="text" id="todoInput" placeholder="新增待辦事項..." />
