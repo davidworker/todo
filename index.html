@@ -11,7 +11,14 @@
         <div class="container">
             <div class="header">
                 <h1>TODO APP</h1>
-                <button id="changeUid" class="change-uid-btn">更換使用者</button>
+                <div class="header-buttons">
+                    <button id="changeUid" class="change-uid-btn">更換使用者</button>
+                    <button id="configApi" class="config-api-btn">設定 API</button>
+                </div>
+            </div>
+            <div id="apiStatus" class="api-status">
+                <span class="status-text">API 狀態：</span>
+                <span id="apiStatusText" class="status-value">未設定</span>
             </div>
             <div class="input-group">
                 <input type="text" id="todoInput" placeholder="新增待辦事項..." />

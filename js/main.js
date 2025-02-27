@@ -1,4 +1,6 @@
 import { Storage } from './Storage.js'
+import { Cloud } from './Cloud.js'
+import { TodoList } from './TodoList.js'
 
 document.addEventListener('DOMContentLoaded', () => {
     const todoInput = document.getElementById('todoInput')
@@ -7,7 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const completedTodoList = document.getElementById('completedTodoList')
     const changeUidBtn = document.getElementById('changeUid')
 
-    const storage = new Storage()
+    // 初始化各個類別
+    const cloud = new Cloud()
+    const todoList = new TodoList(cloud)
+    const storage = new Storage(todoList)
+
+    // API 設定相關元素
+    const configApiBtn = document.getElementById('configApi')
+    const apiStatusText = document.getElementById('apiStatusText')
 
     // 創建待辦事項元素
     const createTodoElement = (todo) => {
@@ -82,6 +91,48 @@ document.addEventListener('DOMContentLoaded', () => {
         await storage.changeUserId()
         renderTodos()
     })
+
+    // 更新 API 狀態顯示
+    function updateApiStatus() {
+        if (cloud.checkApi()) {
+            apiStatusText.textContent = '已連接'
+            apiStatusText.classList.add('connected')
+        } else {
+            apiStatusText.textContent = '未設定'
+            apiStatusText.classList.remove('connected')
+        }
+    }
+
+    // 設定 API
+    configApiBtn.addEventListener('click', async () => {
+        const { value: url } = await window.Swal.fire({
+            title: '設定 API 位置',
+            input: 'url',
+            inputLabel: '請輸入 API 位置',
+            inputPlaceholder: 'https://example.com/api/todo/',
+            inputValue: cloud.apiBaseUrl || '',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return '請輸入有效的 URL'
+                }
+            },
+        })
+
+        if (url) {
+            try {
+                cloud.setApiUrl(url)
+                updateApiStatus()
+                await todoList.syncWithCloud()
+                await window.Swal.fire('成功', 'API 設定已更新', 'success')
+            } catch (error) {
+                await window.Swal.fire('錯誤', error.message, 'error')
+            }
+        }
+    })
+
+    // 初始化 API 狀態顯示
+    updateApiStatus()
 
     // 初始渲染
     renderTodos()

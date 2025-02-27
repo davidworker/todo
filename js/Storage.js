@@ -2,8 +2,9 @@ import { Todo } from './Todo.js'
 import { Cloud } from './Cloud.js'
 
 class Storage {
-    constructor(key = 'todos') {
-        this.key = key
+    constructor(todoList = null) {
+        this.todoList = todoList
+        this.key = 'todos'
         this.cloud = new Cloud()
         this.initialized = false
 
@@ -15,6 +16,8 @@ class Storage {
         } else {
             this.promptForUserId()
         }
+
+        this.loadTodos()
     }
 
     async promptForUserId(isChanging = false) {
@@ -86,17 +89,9 @@ class Storage {
         }
     }
 
-    getTodos() {
-        const items = localStorage.getItem(this.key)
-        if (!items) return []
-
-        try {
-            const parsedItems = JSON.parse(items)
-            return parsedItems.map((item) => Todo.fromJSON(item))
-        } catch (error) {
-            console.error('Error parsing todos:', error)
-            return []
-        }
+    loadTodos() {
+        const todosJson = localStorage.getItem(this.key)
+        this.todos = todosJson ? JSON.parse(todosJson).map((todo) => Todo.fromJSON(todo)) : []
     }
 
     async saveTodos(todos) {
@@ -113,26 +108,27 @@ class Storage {
         }
     }
 
+    getTodos() {
+        return this.todos
+    }
+
     async addTodo(text) {
-        const todos = this.getTodos()
-        const newTodo = new Todo(text)
-        todos.push(newTodo)
-        await this.saveTodos(todos)
-        return newTodo
+        const todo = new Todo(text)
+        this.todos.push(todo)
+        await this.saveTodos(this.todos)
+        return todo
     }
 
     async deleteTodo(id) {
-        const todos = this.getTodos()
-        const filteredTodos = todos.filter((todo) => todo.id !== id)
-        await this.saveTodos(filteredTodos)
+        this.todos = this.todos.filter((todo) => todo.id !== id)
+        await this.saveTodos(this.todos)
     }
 
     async toggleTodo(id) {
-        const todos = this.getTodos()
-        const todo = todos.find((todo) => todo.id === id)
+        const todo = this.todos.find((todo) => todo.id === id)
         if (todo) {
             todo.toggle()
-            await this.saveTodos(todos)
+            await this.saveTodos(this.todos)
         }
     }
 
@@ -146,9 +142,12 @@ class Storage {
         }
     }
 
-    // 新增更換 UID 的方法
     async changeUserId() {
         await this.promptForUserId(true)
+    }
+
+    setTodoList(todoList) {
+        this.todoList = todoList
     }
 }
 

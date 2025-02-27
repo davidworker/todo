@@ -2,23 +2,51 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
 }
 
-.change-uid-btn {
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.change-uid-btn,
+.config-api-btn {
     padding: 8px 16px;
-    background: #2ecc71;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
+    background-color: #4caf50;
     color: white;
-    font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s;
 }
 
-.change-uid-btn:hover {
-    background: #27ae60;
-    transform: translateY(-2px);
+.change-uid-btn:hover,
+.config-api-btn:hover {
+    background-color: #45a049;
+}
+
+.api-status {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-text {
+    font-weight: bold;
+    color: #666;
+}
+
+.status-value {
+    color: #dc3545;
+}
+
+.status-value.connected {
+    color: #28a745;
 }
 
 * {
