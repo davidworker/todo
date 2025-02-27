@@ -3,6 +3,12 @@ import { Todo } from './Todo.js'
 class TodoList {
     constructor(cloud) {
         this.cloud = cloud
+        this.onTodosUpdated = null
+    }
+
+    // 設定更新回調函數
+    setUpdateCallback(callback) {
+        this.onTodosUpdated = callback
     }
 
     // 與雲端同步資料
@@ -21,6 +27,11 @@ class TodoList {
 
             // 更新本地儲存
             localStorage.setItem('todos', JSON.stringify(todos))
+
+            // 觸發更新事件
+            if (this.onTodosUpdated) {
+                this.onTodosUpdated(todos)
+            }
 
             return todos
         } catch (error) {

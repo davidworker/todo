@@ -2,7 +2,7 @@ import { Storage } from './Storage.js'
 import { Cloud } from './Cloud.js'
 import { TodoList } from './TodoList.js'
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const todoInput = document.getElementById('todoInput')
     const addTodoBtn = document.getElementById('addTodo')
     const activeTodoList = document.getElementById('activeTodoList')
@@ -13,6 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const cloud = new Cloud()
     const todoList = new TodoList(cloud)
     const storage = new Storage(todoList)
+
+    // 等待 storage 初始化完成
+    await storage.initialize()
+
+    // 設定 TodoList 的更新回調
+    todoList.setUpdateCallback((todos) => {
+        storage.setTodos(todos)
+        renderTodos()
+    })
 
     // API 設定相關元素
     const configApiBtn = document.getElementById('configApi')
@@ -159,6 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                 }
             } else {
+                // 清除 API 設定
+                cloud.setApiUrl(null)
+                storage.clearCloudSync()
+                renderTodos()
                 await window.Swal.fire({
                     icon: 'info',
                     title: '已清除設定',
