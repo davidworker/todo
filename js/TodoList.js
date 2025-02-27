@@ -9,7 +9,7 @@ class TodoList {
     async syncWithCloud() {
         if (!this.cloud.checkApi()) {
             console.log('API 未設定，無法同步')
-            return
+            return null
         }
 
         try {

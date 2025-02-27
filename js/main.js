@@ -105,29 +105,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 設定 API
     configApiBtn.addEventListener('click', async () => {
-        const { value: url } = await window.Swal.fire({
+        const { value: url, isDismissed } = await window.Swal.fire({
             title: '設定 API 位置',
             input: 'url',
             inputLabel: '請輸入 API 位置',
             inputPlaceholder: 'https://example.com/api/todo/',
-            inputValue: cloud.apiBaseUrl || '',
+            inputValue: localStorage.getItem('todo_api_url') || '',
             showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonText: '確認',
+            denyButtonText: '清除設定',
+            cancelButtonText: '取消',
             inputValidator: (value) => {
-                if (!value) {
+                if (value && !value.startsWith('http')) {
                     return '請輸入有效的 URL'
                 }
             },
         })
 
-        if (url) {
-            try {
-                cloud.setApiUrl(url)
-                updateApiStatus()
-                await todoList.syncWithCloud()
-                await window.Swal.fire('成功', 'API 設定已更新', 'success')
-            } catch (error) {
-                await window.Swal.fire('錯誤', error.message, 'error')
+        try {
+            if (isDismissed) {
+                return
             }
+
+            cloud.setApiUrl(url)
+            updateApiStatus()
+
+            if (url) {
+                // 檢查是否已設定使用者 ID
+                const savedUid = localStorage.getItem('todo_uid')
+                if (!savedUid) {
+                    await storage.promptForUserId()
+                }
+
+                // 確保使用者 ID 已設定後再同步
+                if (localStorage.getItem('todo_uid')) {
+                    const syncedTodos = await todoList.syncWithCloud()
+                    if (syncedTodos) {
+                        storage.setTodos(syncedTodos) // 更新 Storage 中的資料
+                        renderTodos() // 重新渲染畫面
+                    }
+                    await window.Swal.fire({
+                        icon: 'success',
+                        title: '成功',
+                        text: 'API 設定已更新並同步完成',
+                    })
+                }
+            } else {
+                await window.Swal.fire({
+                    icon: 'info',
+                    title: '已清除設定',
+                    text: 'API 設定已清除，將使用本地儲存',
+                })
+            }
+        } catch (error) {
+            await window.Swal.fire('錯誤', error.message, 'error')
         }
     })
 

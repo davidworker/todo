@@ -1,7 +1,9 @@
 class Cloud {
-    constructor(uid = null, apiBaseUrl = null) {
-        this.uid = uid
-        this.apiBaseUrl = apiBaseUrl
+    constructor(uid = null) {
+        // 優先使用傳入的 uid，如果沒有則從 localStorage 讀取
+        this.uid = uid || localStorage.getItem('todo_uid') || null
+        // 從 LocalStorage 讀取儲存的 API URL
+        this.apiBaseUrl = localStorage.getItem('todo_api_url') || null
     }
 
     // 檢查是否有設置 uid
@@ -26,7 +28,12 @@ class Cloud {
                 console.log('API 未設定，略過雲端同步')
                 return []
             }
-            this.checkUid()
+
+            if (!this.uid) {
+                console.log('使用者 ID 未設定，略過雲端同步')
+                return []
+            }
+
             const response = await fetch(`${this.apiBaseUrl}?uid=${this.uid}`)
             const result = await response.json()
 
@@ -49,12 +56,14 @@ class Cloud {
                 console.log('API 未設定，略過雲端儲存')
                 return false
             }
-            this.checkUid()
+
+            if (!this.uid) {
+                console.log('使用者 ID 未設定，略過雲端儲存')
+                return false
+            }
+
             const response = await fetch(this.apiBaseUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({
                     uid: this.uid,
                     data: todos,
@@ -85,9 +94,14 @@ class Cloud {
     // 設置 API 位置
     setApiUrl(url) {
         if (!url) {
-            throw new Error('API 位置不能為空')
+            // 如果 url 為空，則清除設定
+            this.apiBaseUrl = null
+            localStorage.removeItem('todo_api_url')
+            return
         }
         this.apiBaseUrl = url
+        // 儲存 API URL 到 LocalStorage
+        localStorage.setItem('todo_api_url', url)
     }
 }
 

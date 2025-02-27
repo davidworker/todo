@@ -146,6 +146,11 @@ class Storage {
         await this.promptForUserId(true)
     }
 
+    setTodos(todos) {
+        this.todos = todos
+        this.saveTodos(todos)
+    }
+
     setTodoList(todoList) {
         this.todoList = todoList
     }
