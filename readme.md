@@ -25,6 +25,11 @@
 ├── index.html      # 主要的 HTML 檔案
 ├── css/           # CSS 樣式檔案
 ├── js/            # JavaScript 程式碼
+│   ├── main.js    # 應用程式主要入口點
+│   ├── Todo.js    # 待辦事項物件類別定義
+│   ├── TodoList.js # 待辦事項列表管理類別
+│   ├── Storage.js  # 本地儲存管理類別
+│   └── Cloud.js    # API 通訊管理類別
 ├── api/           # PHP API 檔案
 │   ├── index.php  # API 主要處理檔案
 │   └── data/      # JSON 資料儲存目錄
