@@ -1,3 +1,26 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.change-uid-btn {
+    padding: 8px 16px;
+    background: #2ecc71;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.change-uid-btn:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+}
+
 * {
     margin: 0;
     padding: 0;

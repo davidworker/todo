@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addTodoBtn = document.getElementById('addTodo')
     const activeTodoList = document.getElementById('activeTodoList')
     const completedTodoList = document.getElementById('completedTodoList')
+    const changeUidBtn = document.getElementById('changeUid')
 
     const storage = new Storage()
 
@@ -76,14 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    // 設置用戶 ID（可以根據需要修改）
-    const setUserId = (uid) => {
-        storage.setUserId(uid)
-    }
+    // 更換使用者 ID
+    changeUidBtn.addEventListener('click', async () => {
+        await storage.changeUserId()
+        renderTodos()
+    })
 
     // 初始渲染
     renderTodos()
-
-    // 暴露設置用戶 ID 的方法到全局作用域
-    window.setUserId = setUserId
 })

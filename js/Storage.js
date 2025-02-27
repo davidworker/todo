@@ -17,17 +17,18 @@ class Storage {
         }
     }
 
-    async promptForUserId() {
+    async promptForUserId(isChanging = false) {
         try {
             const result = await window.Swal.fire({
-                title: '請輸入使用者 ID',
+                title: isChanging ? '更換使用者 ID' : '請輸入使用者 ID',
                 input: 'text',
                 inputLabel: '這是必填欄位',
                 inputPlaceholder: '請輸入您的使用者 ID',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 confirmButtonText: '確認',
-                showCancelButton: false,
+                showCancelButton: isChanging,
+                cancelButtonText: '取消',
                 inputValidator: (value) => {
                     if (!value) {
                         return '使用者 ID 不能為空！'
@@ -36,17 +37,30 @@ class Storage {
             })
 
             if (result.isConfirmed && result.value) {
+                if (isChanging) {
+                    // 清空本地資料
+                    localStorage.removeItem(this.key)
+                }
                 localStorage.setItem('todo_uid', result.value)
                 this.cloud.setUserId(result.value)
-                if (!this.initialized) {
+                if (!this.initialized || isChanging) {
                     this.initialized = true
                     await this.syncWithCloud()
+                }
+
+                if (isChanging) {
+                    await window.Swal.fire({
+                        icon: 'success',
+                        title: '更換成功',
+                        text: '已成功更換使用者 ID 並同步雲端資料',
+                        timer: 1500,
+                    })
                 }
             }
         } catch (error) {
             console.error('輸入使用者 ID 時發生錯誤:', error)
             // 如果發生錯誤，稍後重試
-            setTimeout(() => this.promptForUserId(), 1000)
+            setTimeout(() => this.promptForUserId(isChanging), 1000)
         }
     }
 
@@ -130,6 +144,11 @@ class Storage {
         } else {
             await this.promptForUserId()
         }
+    }
+
+    // 新增更換 UID 的方法
+    async changeUserId() {
+        await this.promptForUserId(true)
     }
 }
 
