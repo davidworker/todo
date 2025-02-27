@@ -261,3 +261,125 @@ h2 {
 .config-api-btn:hover {
     background-color: #2980b9;
 }
+
+/* RWD 調整 */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .user-info {
+        margin: 10px 0 15px 0;
+        padding: 12px;
+    }
+
+    .user-info-row,
+    .api-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .change-uid-btn,
+    .config-api-btn {
+        margin-left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .api-details {
+        margin-bottom: 5px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        padding: 15px;
+        margin: 20px 0;
+    }
+
+    #todoInput {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #addTodo {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .todos-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .todo-item {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .delete-btn {
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+}
+
+/* 更小的螢幕 */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .todo-section {
+        padding: 1rem;
+    }
+
+    .info-item {
+        font-size: 0.9rem;
+    }
+}
+
+/* 確保在較大螢幕上有最大寬度限制 */
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1100px;
+    }
+}
+
+/* 處理過長的 API URL */
+@media screen and (min-width: 769px) {
+    .api-details {
+        max-width: 70%;
+    }
+}
+
+/* 優化觸控裝置的互動 */
+@media (hover: none) {
+    .todo-item:hover {
+        transform: none;
+    }
+
+    .todo-item {
+        padding: 15px; /* 增加點擊區域 */
+    }
+
+    .delete-btn {
+        padding: 8px 16px; /* 增加點擊區域 */
+    }
+}
