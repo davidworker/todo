@@ -109,11 +109,12 @@ class Storage {
                     this.todoList.onTodosUpdated?.(this.todos)
                 }
             } else {
-                // 如果雲端沒有資料，先載入本地資料
-                this.loadTodos()
-                // 如果本地有資料，上傳到雲端
-                if (this.todos.length > 0) {
-                    await this.cloud.saveTodos(this.todos.map((todo) => todo.toJSON()))
+                // 如果雲端沒有資料，清空本地資料
+                this.todos = []
+                localStorage.removeItem(this.key)
+                // 觸發更新事件
+                if (this.todoList) {
+                    this.todoList.onTodosUpdated?.(this.todos)
                 }
             }
         } catch (error) {
