@@ -25,10 +25,12 @@
 ├── index.html      # 主要的 HTML 檔案
 ├── css/           # CSS 樣式檔案
 ├── js/            # JavaScript 程式碼
-└── api/           # PHP API 檔案
-    ├── index.php  # API 主要處理檔案
-    └── data/      # JSON 資料儲存目錄
-        └── users/ # 使用者資料目錄
+├── api/           # PHP API 檔案
+│   ├── index.php  # API 主要處理檔案
+│   └── data/      # JSON 資料儲存目錄
+│       └── users/ # 使用者資料目錄
+├── favicon/       # 網站圖示檔案
+└── .vscode/       # VS Code 編輯器設定
 ```
 
 ## 系統需求
